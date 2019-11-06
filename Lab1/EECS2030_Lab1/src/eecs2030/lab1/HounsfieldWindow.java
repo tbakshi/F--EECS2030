@@ -33,7 +33,7 @@ package eecs2030.lab1;
  *
  */
 public class HounsfieldWindow {
-	private int level, width; 
+	private int level, width;
 
 	public HounsfieldWindow() {
 		level = 0;
@@ -78,17 +78,12 @@ public class HounsfieldWindow {
 		double lo = level - (double) width / 2;
 		double hi = level + (double) width / 2;
 
-
-
-
-		if(h.get()<lo) {
-			return 0.0; 
-		}
-		else if (h.get()>hi) {
-			return 1.0; 
-		}
-		else { 
-			return (double) (h.get()-lo)/width; 
+		if (h.get() < lo) {
+			return 0.0;
+		} else if (h.get() > hi) {
+			return 1.0;
+		} else {
+			return (double) (h.get() - lo) / width;
 		}
 
 	}
