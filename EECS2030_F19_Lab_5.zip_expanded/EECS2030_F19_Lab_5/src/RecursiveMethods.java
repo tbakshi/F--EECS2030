@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -30,7 +31,13 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticArrayHelper.
 		 */
-		return null;
+		int [] list = new int[n];
+		if(n==0) { 
+			return list; 
+		}
+		list[0]=start; 
+		arithmeticArrayHelper(1, diff, list); 
+		return list;
 	}
 	
 	/**
@@ -47,7 +54,13 @@ public class RecursiveMethods {
 		/*
 		 * Your Task
 		 */ 
+		int size  = seq.length;
+		if (!(i==size)) {
+			seq[i] = seq[i-1]+diff; 
+			arithmeticArrayHelper(i+1, diff, seq); 
+		}
 	}
+	
 	
 	/**
 	 * Return a list storing the first n numbers in an arithmetic sequence,
@@ -69,7 +82,14 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticListHelper.
 		 */
-		return null;
+	List<Integer> list = new ArrayList<Integer>();
+	if (n==0) {
+		return list; 
+	}
+	list.add(start);
+	arithmeticListHelper(1,diff,list,n-1);
+	return list; 
+	
 	}
 	
 	/**
