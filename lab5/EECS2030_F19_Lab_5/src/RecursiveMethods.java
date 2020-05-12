@@ -1,4 +1,8 @@
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 /*
@@ -31,15 +35,13 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public int[] arithmeticArray(int start, int diff, int n) {
-		/*
-		 * Your Task: Make use of the recursive method arithmeticArrayHelper.
-		 */
+
 		int[] list = new int[n];
-		if (n == 0) {
+		if (n == 0)
 			return list;
-		}
 		list[0] = start;
 		arithmeticArrayHelper(1, diff, list);
+
 		return list;
 	}
 
@@ -55,14 +57,16 @@ public class RecursiveMethods {
 	 *             been partially filled at indices 0, 1, ..., i - 1.
 	 */
 	void arithmeticArrayHelper(int i, int diff, int[] seq) {
-		/*
-		 * Your Task
-		 */
+
 		int size = seq.length;
-		if (!(i == size)) {
+		if (i == size) {
+			int list;
+//			System.out.println(Arrays.toString(seq));
+		} else {
 			seq[i] = seq[i - 1] + diff;
 			arithmeticArrayHelper(i + 1, diff, seq);
 		}
+
 	}
 
 	/**
@@ -88,14 +92,15 @@ public class RecursiveMethods {
 		/*
 		 * Your Task: Make use of the recursive method arithmeticListHelper.
 		 */
-		List<Integer> list = new ArrayList<Integer>();
-		if (n == 0) {
-			return list;
-		}
-		list.add(start);
-		arithmeticListHelper(1, diff, list, n - 1);
-		return list;
-
+		List<Integer> l = new ArrayList<Integer>();
+		if (n == 0)
+			return l;
+		l.add(start);
+		if (n == 1)
+			return l;
+		arithmeticListHelper(1, diff, l, n - 1);
+		l.add(l.get(l.size() - 1) + diff);
+		return l;
 	}
 
 	/**
@@ -111,17 +116,13 @@ public class RecursiveMethods {
 	 *             been partially filled at indices 0, 1, ..., i - 1.
 	 */
 	void arithmeticListHelper(int i, int diff, List<Integer> seq, int n) {
-		/*
-		 * Your Task
-		 */
-		if (n == 0) {
+		if (n == 0)
 			return;
-		}
-		seq.add(seq.get(i - 1) + diff);
 		if (i == n) {
 			return;
 		}
-		arithmeticListHelper(i + i, diff, seq, n);
+		seq.add(seq.get(i - 1) + diff);
+		arithmeticListHelper(i + 1, diff, seq, n);
 	}
 
 	/**
@@ -143,13 +144,12 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public boolean isArithmeticArray(int[] a) {
-		/*
-		 * Your Task: Make use of the recursive method isArithmeticArrayHelper.
-		 */
 		if (a.length <= 1)
 			return true;
-		int k = a[1] - a[0];
-		return isArithmeticArrayHelper(1, k, a);
+		int diff = a[1] - a[0];
+//		System.out.println(Arrays.toString(a));
+//		System.out.println(diff);
+		return isArithmeticArrayHelper(1, diff, a);
 	}
 
 	/**
@@ -170,21 +170,18 @@ public class RecursiveMethods {
 	 *         arithmetic sequence with common difference `diff`.
 	 */
 	boolean isArithmeticArrayHelper(int i, int diff, int[] a) {
-		/*
-		 * Your Task
-		 */
 
-		int temp = a[i] - a[i - 1];
+		int tempDiff = a[i] - a[i - 1];
 		if (i == a.length - 1) {
-			if (temp != diff) {
+			if (tempDiff != diff)
 				return false;
-			}
 			return true;
 		}
-		if (temp != diff) {
+//		System.out.println(tempDiff);
+		if (tempDiff != diff)
 			return false;
-		} else {
-			return isArithmeticArrayHelper(i + 1, temp, a);
+		else {
+			return isArithmeticArrayHelper(i + 1, tempDiff, a);
 		}
 
 	}
@@ -208,12 +205,10 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public boolean isArithmeticList(List<Integer> l) {
-		/*
-		 * Your Task: Make use of the recursive method isArithmeticListHelper.
-		 */
-	int diff =0; 
-			isArithmeticListHelper(0,diff,l);
-	return false; 
+		if (l.size() <= 1)
+			return true;
+		int diff = l.get(1) - l.get(0);
+		return isArithmeticListHelper(1, diff, l);
 	}
 
 	/**
@@ -234,10 +229,18 @@ public class RecursiveMethods {
 	 *         arithmetic sequence with common difference `diff`.
 	 */
 	boolean isArithmeticListHelper(int i, int diff, List<Integer> l) {
-		/*
-		 * Your Task
-		 */
-		return false;
+		int tempDiff = l.get(i) - l.get(i - 1);
+		if (i == l.size() - 1) {
+			if (tempDiff != diff)
+				return false;
+			return true;
+		}
+//		System.out.println(tempDiff);
+		if (tempDiff != diff)
+			return false;
+		else {
+			return isArithmeticListHelper(i + 1, tempDiff, l);
+		}
 	}
 
 	/**
@@ -258,11 +261,32 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public int[] insertIntoSortedArray(int[] a, int i) {
-		/*
-		 * Your Task: Define a recursive method yourself and use it here.
-		 */
 		int[] list = new int[a.length + 1];
+		if (a.length == 0) {
+			list[0] = i;
+			return list;
+		}
+		insertIntoSortedArrayHelper(a, list, i, 0);
+//		System.out.println(Arrays.toString(a));
+//		System.out.println(Arrays.toString(list));
 		return list;
+	}
+
+	void insertIntoSortedArrayHelper(int[] a, int[] list, int i, int n) {
+
+		if (a.length == n) {
+			list[a.length] = i;
+			return;
+		}
+
+		if (i < a[n]) {
+			list[n] = i;
+			i = a[n];
+		} else {
+			list[n] = a[n];
+		}
+		insertIntoSortedArrayHelper(a, list, i, n + 1);
+
 	}
 
 	/**
@@ -283,21 +307,41 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public List<Integer> insertIntoSortedList(List<Integer> list, int i) {
-		/*
-		 * Your Task: Define a recursive method yourself and use it here.
-		 */
 		if (list.size() == 0) {
 			list.add(i);
+
 			return list;
 		} else if (list.get(0) > i) {
 			list.add(0, i);
 			return list;
 		}
-
+		insertIntoSortedListHelper(list, i, 0);
 		return list;
-	
-	
-	
+	}
+
+	void insertIntoSortedListHelper(List<Integer> list, int n, int i) {
+//		System.out.println(list.toString());
+		if (list.get(i) == n) {
+			list.add(i, n);
+//			System.out.println("1");
+			return;
+		}
+		if (i == list.size() - 2) {
+//			System.out.println("2 " + i);
+			if (list.get(i + 1) >= n)
+				list.add(i + 1, n);
+			if (list.get(i + 1) < n)
+				list.add(i + 2, n);
+//			System.out.println(list.toString() + " " + n);
+			return;
+		}
+		if (list.get(i) < n && list.get(i + 1) > n) {
+			list.add(i + 1, n);
+//			System.out.println("3");
+			return;
+		}
+//		System.out.println(list.toString());
+		insertIntoSortedListHelper(list, n, i + 1);
 	}
 
 	/**
@@ -320,11 +364,38 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public int[] mergeSortedArrays(int[] left, int[] right) {
-		/*
-		 * Your Task: Define a recursive method yourself and use it here.
-		 */
-		return null;
+		int[] list = new int[left.length + right.length];
+		if (list.length == 0)
+			return list;
+		mergeSortedArraysHelper(list, left, right, 0, 0, right.length - 1);
+		return list;
 	}
+
+	void mergeSortedArraysHelper(int[] list, int[] left, int[] right, int f, int l, int r) {
+		if ((l == left.length) && (r < 0))
+			return;
+
+		if (l == left.length) {
+			list[f] = right[r];
+			mergeSortedArraysHelper(list, left, right, f + 1, l, r - 1);
+		} else if (r < 0) {
+			list[f] = left[l];
+			mergeSortedArraysHelper(list, left, right, f + 1, l + 1, r);
+		} else if (left[l] > right[r]) {
+			list[f] = right[r];
+			mergeSortedArraysHelper(list, left, right, f + 1, l, r - 1);
+		} else if (left[l] < right[r]) {
+			list[f] = left[l];
+			mergeSortedArraysHelper(list, left, right, f + 1, l + 1, r);
+		}
+
+	}
+//	
+//	int[] mergeSortedArraysHelper(int[] arr, int n) {
+//
+//		
+//	
+//	}
 
 	/**
 	 * Given two sorted lists left and right, where left is sorted in a
@@ -346,9 +417,21 @@ public class RecursiveMethods {
 	 *         while).
 	 */
 	public List<Integer> mergeSortedLists(List<Integer> left, List<Integer> right) {
-		/*
-		 * Your Task: Define a recursive method yourself and use it here.
-		 */
-		return null;
+		List<Integer> list = new ArrayList<Integer>();
+		if (left.size() == 0) {
+			Collections.reverse(right);
+			list.addAll(right);
+			return list;
+		} else if (right.size() == 0) {
+			list.addAll(left);
+			return list;
+		}
+		if (left.get(0) > right.get(right.size() - 1))
+			list.add(right.remove(right.size() - 1));
+		else if (left.get(0) < right.get(right.size() - 1))
+			list.add(left.remove(0));
+
+		list.addAll(mergeSortedLists(left, right));
+		return list;
 	}
 }
